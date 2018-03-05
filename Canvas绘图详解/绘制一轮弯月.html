@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>canvas</title>
+	<style>
+		canvas { margin: 0 auto; display: block;}
+	</style>
+</head>
+<body>
+	<canvas id="canvas"></canvas>
+</body>
+<script>
+;(function(){
+	var canvas = document.getElementById('canvas');
+
+	canvas.width = 800;
+	canvas.height = 800;
+	
+
+	var ctx = canvas.getContext('2d');
+
+
+	fillMoon(ctx, 400, 400, 300,2,30)
+
+	// ctx.save();
+	// ctx.beginPath();
+	// ctx.arc(400, 400, 300, 0.5*Math.PI, 1.5*Math.PI,true);
+
+	// ctx.arcTo(1200, 400, 400, 700, (400-100)/(1200-400)*dis(400,100,1200,400));
+	// ctx.lineWidth = 2;
+	// ctx.strokeStyle = "blue";
+	// ctx.stroke();
+	// ctx.closePath();
+	// ctx.restore();
+	
+})();
+
+
+function fillMoon(ctx, x, y, r, d,rot,/*optional*/ fillColor ){
+	ctx.save();
+	ctx.translate(x,y);
+	ctx.rotate(rot/180*Math.PI);
+	ctx.scale(r,r);
+	pathMoon(ctx,d);
+	ctx.fillStyle = fillColor || "#fb5";
+	ctx.fill();
+	ctx.restore();
+}
+
+function pathMoon(ctx,d){
+	ctx.beginPath();
+	ctx.arc(0, 0, 1, 0.5*Math.PI, 1.5*Math.PI,true );
+	ctx.moveTo(0,-1);
+	ctx.arcTo(d , 0, 0, 1, dis(0, -1, d, 0)/d);
+	ctx.closePath();
+}
+
+
+function dis(x1, y1, x2, y2){
+	return Math.sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2));
+}
+
+
+
+</script>
+</html>

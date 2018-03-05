@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		canvas { margin: 0 auto; display: block; border: 1px solid black;}
+	</style>
+</head>
+<body>
+	<canvas id="canvas"></canvas>
+</body>
+<script>
+;(function(){
+	var canvas = document.getElementById('canvas');
+	canvas.width = 900;
+	canvas.height = 800;
+	var ctx = canvas.getContext('2d');
+
+	ctx.font = "bold 40px Arial";
+	ctx.fillStyle = "#058";
+
+	ctx.fillText("落霞与孤鹜齐飞", 50,100);
+
+	var width = ctx.measureText("落霞与孤鹜齐飞").width;
+	ctx.fillText('以上字符的宽度是  ' + width + 'px', 50,200);
+
+
+
+	
+
+
+
+
+})();
+
+
+
+</script>
+</html>
+
+
+
+

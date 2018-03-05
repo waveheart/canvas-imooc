@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		canvas { margin: 0 auto; display: block; border: 1px solid black;}
+		body { background-color: black; }
+	</style>
+</head>
+<body>
+	<canvas id="canvas"></canvas>
+	<input type="range" min="0.5" step="0.01" max="3" style="display: block; margin: 20px auto; width: 800px; " id="scale-range" value="1.0">
+</body>
+
+<script>
+var canvas = document.getElementById('canvas');
+
+var ctx = canvas.getContext('2d');
+var image = new Image();
+var slider = document.getElementById('scale-range')
+
+;(function(){
+	
+	canvas.width = 960;
+	canvas.height = 600;
+
+	var scale = slider.value;
+	
+	image.src = 'bgsourse.jpg';
+	//ctx.drawImage(image,0,0);//必须等图片加载完成才能执行下一部，否则Canva将无法渲染。
+	image.onload = function(){
+		// ctx.drawImage(image,0,0,canvas.width,canvas.height);
+		drawImageByScale(scale);
+
+		slider.onmousemove = function(){
+			scale = slider.value;
+			drawImageByScale(scale);
+		}
+	}
+
+	
+	
+
+
+})();
+
+
+//第一种方法
+// function drawImageByScale(scale){
+
+// 	var imageWidth = 1920*scale;
+// 	var imageHeight = 1200*scale;
+
+// 	var sx = (imageWidth/2 - canvas.width/2)/scale;
+// 	var sy = (imageHeight/2 - canvas.height/2)/scale;
+
+// 	ctx.drawImage(image,sx,sy,canvas.width/scale,canvas.height/scale,0,0,canvas.width,canvas.height);
+
+// }
+
+
+function drawImageByScale(scale){
+	var imageWidth = 960*scale;
+	var imageHeight = 600*scale;
+
+	var dx = canvas.width/2 - imageWidth/2;
+	var dy = canvas.height/2 - imageHeight/2;
+
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
+	ctx.drawImage(image, dx, dy, imageWidth, imageHeight);
+} 
+
+
+</script>
+</html>
+
+
+
+

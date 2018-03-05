@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		#canvas {
+			border: 1px black solid;
+			margin:20px auto;
+			display: block;
+		}
+	</style>
+</head>
+<body>
+	<p></p>
+	<canvas id="canvas">
+		你的浏览版本过低，不支持canvas,请更换浏览器
+	</canvas>
+</body>
+<script src="../../jquery/jquery-3.2.1.js"></script>
+<script>
+;(function(){
+	//取到canvas元素，注意jquerry对象的转换
+	var canvas = $('#canvas')[0];
+	
+	//设置画布的宽度和高度,注意没有单位
+	canvas.width = 1024;
+	canvas.height = 768;
+
+	//使用Canvas的2D绘制功能
+	var ctx = canvas.getContext('2d');
+
+
+	//！！！！！！！
+	//beginPath表示绘图开始！
+	ctx.beginPath();
+
+
+	//MoveTo是设置绘图的起点
+	ctx.moveTo(100, 100);
+	//LineTo是绘制直线，但是这两个都是状态
+	ctx.lineTo(700, 700);
+	ctx.lineTo(100, 700);
+	ctx.lineTo(100, 100);
+
+
+	//！！！！！！！！！
+	//closePath表示绘图结束！通常写在绘制状态后面
+	ctx.closePath();
+	//lineWidth顾名思义，是设置线宽，注意么有单位
+	ctx.lineWidth = 5;
+	//渲染的颜色
+	ctx.strokeStyle = "red";
+	//stroke才是最终的动作，是笔画的意思，在Canvas里用以绘制线条，个人理解为渲染
+	ctx.stroke();
+
+	
+
+	//对绘图进行填充
+	ctx.fillStyle = "rgba(0,255,0,0.5)";
+	ctx.fill();
+
+	
+
+	//！
+	//！！
+	//！！！
+	//新的开始极其重要，否则Canvas会把新的绘图结束符closePath识别为前一个绘图真正的结束符，会覆盖原有样式！！！
+	//！！！！
+	ctx.beginPath();
+
+
+	//canvas 的绘图是基于状态的，如果不结束状态，此后的属性会覆盖原有的属性。天坑！
+	ctx.moveTo(200, 100);
+	ctx.lineTo(700, 600);
+
+	//新的绘图结束！
+	ctx.closePath();
+
+
+	ctx.strokeStyle = "purple";
+	ctx.stroke();
+})();
+</script>
+
+</html>

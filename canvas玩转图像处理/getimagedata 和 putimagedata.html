@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+<style>
+
+canvas { margin: 50px 10px ; display: block; border: 1px solid black; float:left; width: 640px; height:400px; }
+#canvasb {float: right;}
+.wraper::after { clear: both; content: ""; display: block;}
+.filter { text-align: center; }
+
+</style>
+</head>
+<body>
+<div class="wraper">
+	<canvas id="canvasa"></canvas>
+	<canvas id="canvasb"></canvas>
+</div>
+
+<div class="filter">
+	<a href="javascript:greyEffect()">greyEffect</a>
+	<a href="javascript:blackEffect()">Black&white Effect</a>
+	<a href="javascript:reverseEffect()">reverse Effect</a>
+	<a href="javascript:blurEffect()">blur Effect</a>
+	<a href="javascript:mosaicEffect()">mosaic Effect</a>
+</div>
+
+	
+</body>
+<script>
+
+var canvasa = document.getElementById('canvasa');
+var ctxa = canvasa.getContext('2d');
+
+var canvasb = document.getElementById('canvasb');
+var ctxb = canvasb.getContext('2d');
+
+var image = new Image();
+
+
+
+;(function(){
+	canvasa.width = 640;
+	canvasa.height = 400;
+
+	canvasb.width = 640;
+	canvasb.height = 400;
+	
+	image.src = 'bgsourse.jpg';
+    image.crossOrigin = "Anonymous";
+	//ctx.drawImage(image,0,0);//必须等图片加载完成才能执行下一部，否则Canva将无法渲染。
+	image.onload = function(){
+		ctxa.drawImage(image, 0, 0, canvasa.width, canvasa.height);
+		
+	}
+
+
+})();
+
+function greyEffect(){
+	ctxb.clearRect(0, 0, canvasb.width, canvasb.height);
+
+	var imagedata = ctxa.getImageData(0, 0, canvasa.width, canvasa.height);
+	var pixelData = imagedata.data;
+
+	for(var i=0; i<canvasb.width*canvasb.height; i++){
+		var r = pixelData[4*i+0] ;
+		var g = pixelData[4*i+1] ;
+		var b = pixelData[4*i+2] ;
+
+		var grey = r*0.3 + g*0.59 + b*0.11;
+
+		pixelData[4*i+0] = grey;
+		pixelData[4*i+1] = grey;
+		pixelData[4*i+2] = grey; 
+	}
+
+
+	ctxb.putImageData(imagedata,0,0,0,0,canvasb.width, canvasb.height);
+}
+
+
+function blackEffect(){
+	ctxb.clearRect(0, 0, canvasb.width, canvasb.height);
+
+	var imagedata = ctxa.getImageData(0, 0, canvasa.width, canvasa.height);
+	var pixelData = imagedata.data;
+
+	for(var i=0; i<canvasb.width*canvasb.height; i++){
+		var v;
+
+		var r = pixelData[4*i+0] ;
+		var g = pixelData[4*i+1] ;
+		var b = pixelData[4*i+2] ;
+
+		var grey = r*0.3 + g*0.59 + b*0.11;
+		
+		if(grey > 255/2){
+			v = 255;
+		}
+		else{
+			v = 0;
+		}
+
+		pixelData[4*i+0] = v;
+		pixelData[4*i+1] = v;
+		pixelData[4*i+2] = v; 
+	}
+
+
+	ctxb.putImageData(imagedata,0,0,0,0,canvasb.width, canvasb.height);
+}
+
+
+function reverseEffect(){
+	ctxb.clearRect(0, 0, canvasb.width, canvasb.height);
+
+	var imagedata = ctxa.getImageData(0, 0, canvasa.width, canvasa.height);
+	var pixelData = imagedata.data;
+
+	for(var i=0; i<canvasb.width*canvasb.height; i++){
+		var v;
+
+		var r = pixelData[4*i+0] ;
+		var g = pixelData[4*i+1] ;
+		var b = pixelData[4*i+2] ;
+
+		pixelData[4*i+0] = 255 - r;
+		pixelData[4*i+1] = 255 - g;
+		pixelData[4*i+2] = 255 - b; 
+	}
+
+
+	ctxb.putImageData(imagedata,0,0,0,0,canvasb.width, canvasb.height);
+}
+
+
+
+function blurEffect(){
+	ctxb.clearRect(0, 0, canvasb.width, canvasb.height);
+
+	var tmpImagedata = ctxa.getImageData(0, 0, canvasa.width, canvasa.height);
+	var tmpPixelData = tmpImagedata.data;
+
+
+	var imagedata = ctxa.getImageData(0, 0, canvasa.width, canvasa.height);
+	var pixelData = imagedata.data;
+
+	var blurR = 3;
+	var totalnum = (blurR*2+1)*(blurR*2+1);
+	for(var i=blurR; i<canvasb.height-blurR;i++){
+		for(var j=blurR; j<canvasb.width-blurR;j++){
+
+			var totalr = 0, totalg = 0, totalb = 0;
+			for(var dx=-blurR; dx<=blurR;dx++){
+				for(var dy=-blurR; dy<=blurR; dy++){
+					var x = i+dx;
+					var y = j+dy;
+					var p = x*canvasb.width + y;
+					totalr += tmpPixelData[p*4+0];
+					totalg += tmpPixelData[p*4+1];
+					totalb += tmpPixelData[p*4+2];
+				}
+			}
+
+			var p = i*canvasb.width + j;
+
+			pixelData[p*4+0] = totalr/totalnum;
+			pixelData[p*4+1] = totalg/totalnum;
+			pixelData[p*4+2] = totalb/totalnum;
+
+		}
+	}
+	
+
+
+	ctxb.putImageData(imagedata,0,0,0,0,canvasb.width, canvasb.height);
+}
+
+function mosaicEffect(){
+	ctxb.clearRect(0, 0, canvasb.width, canvasb.height);
+
+	var tmpImagedata = ctxa.getImageData(0, 0, canvasa.width, canvasa.height);
+	var tmpPixelData = tmpImagedata.data;
+
+
+	var imagedata = ctxa.getImageData(0, 0, canvasa.width, canvasa.height);
+	var pixelData = imagedata.data;
+
+	var size = 10;
+	var totalnum = size*size;
+	for(var i=0; i<canvasb.height;i+=size){
+		for(var j=0; j<canvasb.width;j+=size){
+
+			var totalr = 0, totalg = 0, totalb = 0;
+			for(var dx=0; dx<size;dx++){
+				for(var dy=0; dy<size; dy++){
+					var x = i+dx;
+					var y = j+dy;
+					var p = x*canvasb.width + y;
+					totalr += tmpPixelData[p*4+0];
+					totalg += tmpPixelData[p*4+1];
+					totalb += tmpPixelData[p*4+2];
+				}
+			}
+
+			var p = i*canvasb.width + j;
+
+			resr = totalr/totalnum;
+			resg = totalg/totalnum;
+			resb = totalb/totalnum;
+
+			for(var dx=0; dx<size;dx++){
+				for(var dy=0; dy<size; dy++){
+					var x = i+dx;
+					var y = j+dy;
+					var p = x*canvasb.width + y
+					pixelData[p*4+0] = resr;
+					pixelData[p*4+1] = resg;
+					pixelData[p*4+2] = resb;
+				}
+			}
+
+		}
+	}
+	
+
+
+	ctxb.putImageData(imagedata,0,0,0,0,canvasb.width, canvasb.height);
+}
+
+
+</script>
+</html>
+
+
+
+

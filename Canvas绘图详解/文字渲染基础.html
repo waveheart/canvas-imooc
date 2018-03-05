@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		canvas { margin: 0 auto; display: block; border: 1px solid black;}
+	</style>
+</head>
+<body>
+	<canvas id="canvas"></canvas>
+</body>
+<script>
+;(function(){
+	var canvas = document.getElementById('canvas');
+	canvas.width = 900;
+	canvas.height = 800;
+	var ctx = canvas.getContext('2d');
+
+	ctx.font = "bold 40px Arial";//加粗可以没有，但是字号，和字体类型应该有？
+	ctx.fillStyle = "#058";
+	ctx.fillText("欢迎大家学习CANVAS", 40, 100);
+
+	ctx.lineWidth = 1;
+	ctx.strokeStyle = "#058";
+	ctx.strokeText("LEARNING CANVAS 从入门到放弃！", 40	,200)
+
+
+	ctx.fillText("欢迎大家学习CANVAS", 40, 300,300);
+	ctx.strokeText("LEARNING CANVAS 从入门到放弃！", 40	,400,300);
+
+	var linearGrad = ctx.createLinearGradient(0,0,800,0);
+	linearGrad.addColorStop(0,'red');
+	linearGrad.addColorStop(0.25,'orange');
+	linearGrad.addColorStop(0.5,'yellow');
+	linearGrad.addColorStop(0.75,'green');
+	linearGrad.addColorStop(1,'purple');
+	ctx.fillStyle = linearGrad;
+	ctx.fillText('LEARNING CANVAS 从入门到放弃！', 40,500);
+
+	var backgroundImg = new Image();
+	backgroundImg.src = 'bg.jpg';
+	backgroundImg.onload = function(){
+		var pattern = ctx.createPattern(backgroundImg, "repeat");
+		ctx.fillStyle = pattern;
+		ctx.font = "bold 100px Arial"
+		ctx.fillText("CANVAS",40,650);
+		ctx.strokeStyle = 3;
+		ctx.strokeText("CANVAS",40,650);
+
+	
+		}
+
+	ctx.save();
+
+	ctx.beginPath();
+	ctx.fillStyle = "#058";
+	ctx.font = "800 50px Arial"
+	ctx.shadowColor = 'gray'
+	ctx.shadowOffsetX = 4;
+	ctx.shadowOffsetY = 4;
+	ctx.shadowBlur =5;
+
+	ctx.fillText('Canvas',40,750)
+
+	ctx.closePath();
+	ctx.restore();
+})();
+
+</script>
+</html>
+
+
+
+

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		#canvas {
+			border: 1px black solid;
+			margin:20px auto;
+			display: block;
+		}
+	</style>
+</head>
+<body>
+	<p></p>
+	<canvas id="canvas">
+		你的浏览版本过低，不支持canvas,请更换浏览器
+	</canvas>
+</body>
+<script>
+
+	;(function(){
+		var canvas = document.getElementById('canvas');
+		canvas.width = 800;
+		canvas.height = 800;
+
+		var ctx = canvas.getContext('2d');
+		
+		for(var i = 0; i < 10; i++){
+			ctx.beginPath();
+			ctx.arc(85+i*70, 100, 30, 0, (1+i)/5*Math.PI);
+			ctx.closePath();
+			ctx.strokeStyle = "pink";
+			ctx.lineWidth = 5;
+			ctx.stroke();
+		}
+		
+		//与上段代码对比 closePath的作用。
+		for(var i = 0; i < 10; i++){
+			ctx.beginPath();
+			ctx.arc(85+i*70, 200, 30, 0, (1+i)/5*Math.PI);
+
+			ctx.strokeStyle = "pink";
+			ctx.lineWidth = 5;
+			ctx.stroke();
+		}
+		
+		//与上段代码对比 closePath,和逆时针绘制的效果。
+		for(var i = 0; i < 10; i++){
+			ctx.beginPath();
+			ctx.arc(85+i*70, 300, 30, 0, (1+i)/5*Math.PI, true);
+			ctx.closePath();
+			ctx.strokeStyle = "pink";
+			ctx.lineWidth = 5;
+			ctx.stroke();
+		}
+
+
+		// 取消closePath,不闭合，逆时针绘制的效果。
+		for(var i = 0; i < 10; i++){
+			ctx.beginPath();
+			ctx.arc(85+i*70, 400, 30, 0, (1+i)/5*Math.PI, true);
+
+			ctx.strokeStyle = "pink";
+			ctx.lineWidth = 5;
+			ctx.stroke();
+		}
+
+
+		//不管有没有调用closePath()，在fill的时候，canVAS都会自动调用closePath()
+		for(var i = 0; i < 10; i++){
+			ctx.beginPath();
+			ctx.arc(85+i*70, 500, 30, 0, (1+i)/5*Math.PI);
+			ctx.closePath();
+			ctx.strokeStyle = "pink";
+			ctx.lineWidth = 5;
+			ctx.stroke();
+			ctx.fillStyle = "yellow";
+			ctx.fill()
+		}
+		
+		//不管有没有调用closePath()，在fill的时候，canVAS都会自动调用closePath()
+		for(var i = 0; i < 10; i++){
+			ctx.beginPath();
+			ctx.arc(85+i*70, 600, 30, 0, (1+i)/5*Math.PI);
+
+			ctx.strokeStyle = "pink";
+			ctx.lineWidth = 5;
+			ctx.stroke();
+			ctx.fillStyle = "red";
+			ctx.fill();
+		}
+
+	})();
+
+	
+</script>
+
+</html>

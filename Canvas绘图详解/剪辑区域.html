@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		canvas { margin: 0 auto; display: block; border: 1px solid black;}
+	</style>
+</head>
+<body>
+	<canvas id="canvas"></canvas>
+</body>
+<script>
+
+var searchLight = { x:400, y:400, radius:200, vx:Math.random()*10+5, vy:Math.random()*10+5}
+
+var rot = 0;
+var isIncrease = true;
+
+
+;(function(){
+	var canvas = document.getElementById('canvas');
+	
+
+	canvas.width = 800;
+	canvas.height = 800;
+	var ctx = canvas.getContext('2d');
+
+	setInterval(function(){
+		draw(ctx),
+		update(canvas.width,canvas.height);
+	},30)
+
+
+})();
+
+function draw(ctx){
+	var canvas = ctx.canvas;
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+	ctx.save();
+
+	ctx.beginPath();
+	ctx.fillStyle = "black";
+	ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+
+	ctx.save();
+	ctx.translate(searchLight.x, searchLight.y);
+	ctx.rotate(rot/180*Math.PI);
+	ctx.scale(searchLight.radius, searchLight.radius);
+	starPath(ctx);
+	ctx.fillStyle = "white";
+	ctx.fill();
+	ctx.restore();
+	ctx.clip();
+	
+	// ctx.rotate(Math.PI);
+	// ctx.arc(searchLight.x, searchLight.y+searchLight.radius, searchLight.radius, Math.PI*0.5, Math.PI*1.5);
+	// ctx.arc(searchLight.x+searchLight.radius, searchLight.y, searchLight.radius, Math.PI*1, Math.PI*2);
+	// ctx.lineTo(searchLight.x+searchLight.radius*2, searchLight.y+searchLight.radius*2);
+	// ctx.lineTo(searchLight.x, searchLight.y+searchLight.radius*2);
+	// ctx.fill();
+	// ctx.clip();
+	
+
+
+	ctx.beginPath();
+	ctx.font = "bold 500px 宋体";
+	ctx.textAlign = "center";
+	ctx.textBaseline = "middle";
+	ctx.fillStyle = "#058";
+	ctx.fillText("慕", canvas.width/2, canvas.height/2);
+
+	ctx.closePath();
+	ctx.restore();
+}
+
+// function update(width,height){
+// 	rot += 1;
+// 	searchLight.x += searchLight.vx;
+// 	searchLight.y += searchLight.vy;
+
+// 	if(searchLight.x-searchLight.radius<=0){
+// 		searchLight.vx = -searchLight.vx;
+// 		searchLight.x = searchLight.radius;
+// 	}
+
+// 	if(searchLight.x+searchLight.radius>=width){
+// 		searchLight.vx = -searchLight.vx;
+// 		searchLight.x = width - searchLight.radius;
+// 	}
+
+// 	if(searchLight.y-searchLight.radius<=0){
+// 		searchLight.vy = -searchLight.vy;
+// 		searchLight.y = searchLight.radius;
+// 	}
+
+// 	if(searchLight.y+searchLight.radius>=height){
+// 		searchLight.vy = -searchLight.vy;
+// 		searchLight.y = height - searchLight.radius;
+// 	}
+// }
+
+
+function update(width,height){
+	if(searchLight.radius >700){
+		isIncrease = false;
+	}
+	else if(searchLight.radius <150){
+		isIncrease = true;
+	}
+
+	if(isIncrease){
+		searchLight.radius += 5;
+	}
+	else{
+		searchLight.radius -= 5;
+	}
+}
+
+function starPath(ctx){
+	ctx.beginPath()
+
+	for(var i = 0; i < 5; i++){
+		ctx.lineTo(Math.cos((18 + i* 72 )*Math.PI/180), -Math.sin((18 + i*72 )*Math.PI/180));
+		ctx.lineTo(Math.cos((54 + i* 72 )*Math.PI/180)*0.5, -Math.sin((54 + i*72 )*Math.PI/180)*0.5);
+	}
+	ctx.closePath();
+	
+}
+
+
+</script>
+</html>
+
+
+
+

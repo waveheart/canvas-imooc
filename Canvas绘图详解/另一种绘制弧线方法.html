@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		canvas { margin: 0 auto; display: block;}
+	</style>
+</head>
+<body>
+	<canvas id="canvas"></canvas>
+</body>
+<script>
+;(function(){
+	var canvas = document.getElementById('canvas');
+
+	canvas.width = 800;
+	canvas.height = 800;
+	
+
+	var ctx = canvas.getContext('2d');
+
+	arcToTest(ctx, 150, 150, 650, 150, 650, 650, 600)
+
+	//尝试修改半径，查看效果!
+
+	//arcToTest(ctx, 150, 150, 550, 350, 250, 650, 200)
+
+	// //arcTo
+	// ctx.beginPath();
+	// ctx.moveTo(150,150);
+	// ctx.arcTo(650,150,650,650,300);
+
+
+	// ctx.lineWidth = 6;
+	// ctx.strokeStyle = "red";
+	// ctx.stroke();
+
+	// //baseline
+	// ctx.beginPath();
+	// ctx.moveTo(150, 150);
+	// ctx.lineTo(650, 150);
+	// ctx.lineTo(650, 650);
+
+	// ctx.lineWidth = 2;
+	// ctx.strokeStyle = "gray";
+	// ctx.stroke();
+
+
+})();
+
+
+function arcToTest(ctx, x0, y0, x1, y1, x2, y2, R){
+
+	ctx.beginPath();
+	ctx.moveTo(x0,y0);
+	ctx.arcTo(x1,y1,x2,y2,R);
+
+
+	ctx.lineWidth = 6;
+	ctx.strokeStyle = "red";
+	ctx.stroke();
+
+	//baseline
+	ctx.beginPath();
+	ctx.moveTo(x0, y0);
+	ctx.lineTo(x1, y1);
+	ctx.lineTo(x2, y2);
+
+	ctx.lineWidth = 2;
+	ctx.strokeStyle = "gray";
+	ctx.stroke();
+}
+
+</script>
+</html>

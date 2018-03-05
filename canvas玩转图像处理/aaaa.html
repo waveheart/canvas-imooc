@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+<style>
+
+canvas { margin: 50px 10px ; display: block; border: 1px solid black; float:left; width: 640px; height:400px; }
+#canvasb {float: right;}
+.wraper::after { clear: both; content: ""; display: block;}
+.filter { text-align: center; }
+
+</style>
+</head>
+<body>
+<div class="wraper">
+    <canvas id="canvasa"></canvas>
+    <canvas id="canvasb"></canvas>
+</div>
+
+<div class="filter">
+    <a href = "javascript:greyEffect()" >Grey Effect</a>
+</div>
+
+    
+</body>
+<script>
+
+// var canvasa = document.getElementById('canvasa');
+// var canvasa = document.getElementById("canvasa")
+// var contexta = canvasa.getContext('2d');
+
+// var canvasb = document.getElementById('canvasb');
+// var contextb = canvasa.getContext('2d');
+
+// var image = new Image();
+
+var canvasa = document.getElementById('canvasa');
+var contexta = canvasa.getContext('2d');
+
+
+var canvasb = document.getElementById('canvasb');
+var contextb = canvasb.getContext("2d")
+
+var image = new Image();
+
+
+
+;(function(){
+    canvasa.width = 640;
+    canvasa.height = 400;
+
+    canvasb.width = 640;
+    canvasb.height = 400;
+    
+    image.src = 'bgsourse.jpg';
+
+    //ctx.drawImage(image,0,0);//必须等图片加载完成才能执行下一部，否则Canva将无法渲染。
+    image.onload = function(){
+        contexta.drawImage(image, 0, 0, canvasa.width, canvasa.height);
+        
+    }
+
+
+})();
+
+function greyEffect(){
+
+            var imageData = contexta.getImageData( 0 , 0 , canvasa.width , canvasa.height )
+            
+            contextb.putImageData( imageData , 0 , 0 , 0 , 0 , canvasb.width , canvasb.height )
+            
+        }
+
+
+
+</script>
+</html>
+
+
+
+

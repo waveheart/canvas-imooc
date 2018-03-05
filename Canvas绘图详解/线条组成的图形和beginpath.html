@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		canvas { margin: 0 auto; display: block;}
+	</style>
+</head>
+<body>
+	<canvas id="canvas"></canvas>
+</body>
+<script>
+;(function(){
+	var canvas = document.getElementById('canvas');
+	canvas.width = 600;
+	canvas.height = 600;
+	var ctx = canvas.getContext('2d');
+
+	ctx.beginPath();
+	ctx.moveTo(50,200);
+	ctx.lineTo(300,200);
+	ctx.lineTo(300,50);
+	ctx.lineTo(500,300);
+	ctx.lineTo(300,550);
+	ctx.lineTo(300,400);
+	ctx.lineTo(50,400);
+	ctx.lineTo(50,200);//使用closePath最后一个lineto可以省略
+	ctx.closePath();//如果没有closepath图形将不会完全封闭！
+	
+
+
+	ctx.lineWidth = 10;
+	ctx.strokeStyle = "blue";
+	//ctx.lineCap = "square";
+	//ctx.fillStyle = "yellow"
+
+
+	ctx.stroke();
+	//如果先描边，再填充，会导致fill的动作覆盖掉一部分描边
+	//ctx.fill();
+
+	ctx.beginPath();
+	ctx.lineTo(50,250);//注意lineto与beginpath的配合使用，第一个lineTo由于重新开始路径，并非从（0，0）开始，而是从任何一点开始！
+	ctx.lineTo(100,300);
+	ctx.lineTo(50,350);
+	//ctx.lineWidth = 4;
+	ctx.strokeStyle = "red";
+	ctx.stroke();
+
+	ctx.beginPath();
+	ctx.lineTo(100,250);//注意lineto与beginpath的配合使用，第一个lineTo由于重新开始路径，并非从（0，0）开始，而是从任何一点开始！
+	ctx.lineTo(150,300);
+	ctx.lineTo(100,350);
+	//ctx.lineWidth = 6;
+	ctx.strokeStyle = "green";
+	ctx.stroke();
+
+
+
+	ctx.beginPath();
+	ctx.lineTo(150,250);//注意lineto与beginpath的配合使用，第一个lineTo由于重新开始路径，并非从（0，0）开始，而是从任何一点开始！
+	ctx.lineTo(200,300);
+	ctx.lineTo(150,350);
+	ctx.lineWidth = 4;
+	ctx.strokeStyle = "blue";
+	ctx.stroke();
+
+
+})();
+</script>
+</html>

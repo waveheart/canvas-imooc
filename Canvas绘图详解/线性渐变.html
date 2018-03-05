@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		canvas { margin: 0 auto; display: block; border: 1px solid black;}
+	</style>
+</head>
+<body>
+	<canvas id="canvas"></canvas>
+</body>
+<script>
+;(function(){
+	var canvas = document.getElementById('canvas');
+	canvas.width = 600;
+	canvas.height = 600;
+	var ctx = canvas.getContext('2d');
+
+	var lineargrad = ctx.createLinearGradient(0,0,300,0);
+	lineargrad.addColorStop(0,'purple');
+	lineargrad.addColorStop(0.25,'pink');
+	lineargrad.addColorStop(0.5,'yellow');
+	lineargrad.addColorStop(0.75,'red');
+	lineargrad.addColorStop(1,'blue');
+	ctx.fillStyle = lineargrad;
+	ctx.fillRect(0,0,400,400)
+	
+
+	
+
+
+})();
+
+</script>
+</html>

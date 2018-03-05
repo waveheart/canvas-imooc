@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		canvas { margin: 0 auto; display: block; border: 1px solid black;}
+	</style>
+</head>
+<body>
+	<canvas id="canvas"></canvas>
+</body>
+<script>
+;(function(){
+	var canvas = document.getElementById('canvas');
+	canvas.width = 600;
+	canvas.height = 600;
+	var ctx = canvas.getContext('2d');
+
+	var radialgrad = ctx.createRadialGradient(300,300,50,300,300,300)
+	
+	radialgrad.addColorStop(0,'purple');
+	radialgrad.addColorStop(0.25,'pink');
+	radialgrad.addColorStop(0.5,'yellow');
+	radialgrad.addColorStop(0.75,'red');
+	radialgrad.addColorStop(1,'blue');
+	ctx.fillStyle = radialgrad;
+	ctx.fillRect(0,0,600,600)
+	
+
+	
+
+
+})();
+
+</script>
+</html>

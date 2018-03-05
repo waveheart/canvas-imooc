@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		canvas { margin: 0 auto; display: block;}
+	</style>
+</head>
+<body>
+	<canvas id="canvas"></canvas>
+</body>
+<script>
+;(function(){
+	var canvas = document.getElementById('canvas');
+	canvas.width = 600;
+	canvas.height = 600;
+	var ctx = canvas.getContext('2d');
+
+	drawRect(ctx, 200,200,250,250,2,"pink","purple");
+	drawRect2(ctx, 350,350,200,200,3,"rgba(0,255,0,0.5)", "red");
+
+})();
+
+function drawRect(ctx, x, y, width, height, lineWidth, fillColor, strokeColor){
+	ctx.beginPath();
+
+
+	// ctx.moveTo(x,y);
+	// ctx.lineTo(x + width, y);
+	// ctx.lineTo(x + width, y + height);
+	// ctx.lineTo(x        , y + height);
+	// ctx.lineTo(x 		, y);
+	// ctx.closePath();
+	
+
+	//以上代码可以用canvas本身提供rect函数替代，实际原理一样
+	
+	ctx.rect(x, y, width, height);
+
+	ctx.lineWidth = lineWidth;
+	ctx.fillStyle = fillColor;
+	ctx.strokeStyle = strokeColor;
+
+	ctx.fill();
+	ctx.stroke();
+
+}
+
+function drawRect2(ctx, x, y, width, height, lineWidth, fillStyle, strokeStyle){
+	
+	ctx.lineWidth = lineWidth;
+	ctx.fillStyle = fillStyle;
+	ctx.strokeStyle = strokeStyle;
+
+	ctx.fillRect(x, y, width, height);
+	ctx.strokeRect(x, y, width, height);
+}
+
+</script>
+</html>

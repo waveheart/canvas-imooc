@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		canvas { margin: 0 auto; display: block; border: 1px solid black;}
+	</style>
+</head>
+<body>
+	<canvas id="canvas"></canvas>
+</body>
+<script>
+;(function(){
+	var canvas = document.getElementById('canvas');
+	canvas.width = 900;
+	canvas.height = 600;
+	var ctx = canvas.getContext('2d');
+
+	var skyStyle = ctx.createRadialGradient(canvas.width/2, canvas.height, 0, canvas.width/2, canvas.height, canvas.height);
+	skyStyle.addColorStop(1, 'black');
+	skyStyle.addColorStop(0, '#035');
+
+
+
+	ctx.fillStyle = skyStyle;
+	ctx.rect(0, 0, canvas.width, canvas.height);
+	ctx.fill();
+	for(var i=0; i<200; i++){
+		var x = Math.random()*canvas.width;
+			y = Math.random()*canvas.height*0.65;
+			r = Math.random()*5 + 5;
+			rotate = Math.random()*360;
+
+		drawStar(ctx, x, y, r, 2*r, rotate);
+	} 
+
+	
+
+
+})();
+
+function drawStar(ctx, x, y, r, rotate){
+	ctx.save();
+
+	ctx.translate(x,y);
+	ctx.rotate(rotate/180*Math.PI);
+	ctx.scale(r, r);
+
+	starPath(ctx);
+
+	ctx.fillStyle = "#fb3";
+	//ctx.strokeStyle = "#fd5";
+	//ctx.lineWidth = 3;
+	//ctx.lineJoin = "round";
+
+	ctx.fill();
+	//ctx.stroke();
+
+
+
+	ctx.restore();
+}
+
+function starPath(ctx){
+	ctx.beginPath()
+
+	for(var i = 0; i < 5; i++){
+		ctx.lineTo(Math.cos((18 + i* 72 )*Math.PI/180), -Math.sin((18 + i*72 )*Math.PI/180));
+		ctx.lineTo(Math.cos((54 + i* 72 )*Math.PI/180)*0.5, -Math.sin((54 + i*72 )*Math.PI/180)*0.5);
+	}
+	ctx.closePath();
+	
+}
+</script>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		canvas { margin: 50px auto; display: block; border: 1px solid black;}
+		#offcanvas { display: none; }
+	</style>
+</head>
+<body>
+	<canvas id="canvas"></canvas>
+	<canvas id="offcanvas"></canvas>
+</body>
+<script>
+
+var canvas = document.getElementById('canvas');
+
+var scale;
+
+var ctx = canvas.getContext('2d');
+var image = new Image();
+var isMouseDown = false;
+
+var offcanvas = document.getElementById('offcanvas');
+var offcanvasCtx = offcanvas.getContext('2d');
+
+;(function(){
+	
+	canvas.width = 900;
+	canvas.height = 384;
+	
+	image.src = 'bgsourse12.jpg';
+	//ctx.drawImage(image,0,0);//必须等图片加载完成才能执行下一部，否则Canva将无法渲染。
+	image.onload = function(){
+		
+		offcanvas.width = image.width;
+		offcanvas.height = image.height;
+		scale = offcanvas.width / canvas.width;
+
+		ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+		offcanvasCtx.drawImage(image, 0,0);
+	}
+	
+
+
+})();
+
+function widowToCanvas(x, y){
+	var bbox = canvas.getBoundingClientRect()
+	return {x:x-bbox.left, y:y-bbox.top}
+}
+
+	canvas.onmousedown = function(e){
+		e.preventDefault();
+		var point = widowToCanvas(e.clientX, e.clientY);
+
+		isMouseDown = true;
+
+		drawCanvasWithMagnifier(true,point)
+	}
+
+	canvas.onmousemove = function(e){
+		e.preventDefault();
+		if(isMouseDown){
+			var point = widowToCanvas(e.clientX, e.clientY);
+
+			drawCanvasWithMagnifier(true,point)
+		}
+	}
+
+	canvas.onmouseup = function(e){
+		e.preventDefault();
+		isMouseDown = false;
+		drawCanvasWithMagnifier(false)
+	}
+
+	canvas.onmouseout = function(e){
+		e.preventDefault();
+		isMouseDown = false;
+		drawCanvasWithMagnifier(false)
+	}
+
+
+function drawCanvasWithMagnifier(isShowMagnifier,point) {
+
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
+	ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+	if(isShowMagnifier){
+		drawMagnifier(point);
+	}
+}
+
+function drawMagnifier(point){
+	var imageLG_cx = point.x*scale;
+	var imageLG_cy = point.y*scale;
+
+	var mr = 100;
+
+	var sx = imageLG_cx - mr;
+	var sy = imageLG_cy - mr;
+
+	var dx = point.x - mr;
+	var dy = point.y - mr;
+
+	ctx.save();
+	ctx.strokeStyle = "gray";
+	ctx.lineWidth = 1;
+
+	ctx.beginPath();
+	ctx.arc(point.x, point.y, mr, 0, Math.PI*2);
+	ctx.stroke();
+
+	ctx.clip();
+
+	ctx.drawImage(offcanvas, sx, sy, mr*2, mr*2, dx, dy, mr*2, mr*2);
+	ctx.restore();
+}
+
+</script>
+</html>
+
+
+
+

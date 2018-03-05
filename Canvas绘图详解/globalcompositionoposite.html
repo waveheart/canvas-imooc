@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		canvas { margin: 0 auto; display: block; border: 1px solid black;}
+	</style>
+</head>
+<body>
+	<canvas id="canvas"></canvas>
+</body>
+<script>
+var balls =[];
+
+;(function(){
+	var canvas = document.getElementById('canvas');
+	
+	canvas.width = 900;
+	canvas.height = 800;
+	var ctx = canvas.getContext('2d');
+
+	ctx.globalCompositeOperation = "xor";
+
+	for(var i=0; i<100;i++){
+		var R = Math.floor(Math.random()*255);
+		var G = Math.floor(Math.random()*255);
+		var B = Math.floor(Math.random()*255);
+		var radius = Math.random()*40+20;
+		
+		var aball = {
+			color:"rgb("+R+","+G+","+B +")",
+			radius: radius,
+			x:radius + Math.random()*(canvas.width -2*radius),
+			y:radius + Math.random()*(canvas.height - 2*radius),
+			vx:(Math.random()*5+2)*Math.pow(-1,Math.floor(Math.random()*1000)),
+			vy:(Math.random()*5+2)*Math.pow(-1,Math.floor(Math.random()*1000))
+
+		}
+		balls[i] = aball;
+	}
+	
+	setInterval(function(){
+		draw(ctx);
+		update(canvas.width,canvas.height);
+	},30)
+
+})();
+
+function draw(ctx){
+	var canvas = ctx.canvas;
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+	for(var i=0;i<balls.length;i++){
+		ctx.fillStyle = balls[i].color;
+		ctx.beginPath();
+		ctx.arc(balls[i].x, balls[i].y, balls[i].radius, 0, Math.PI*2);
+		ctx.closePath();
+		ctx.fill();
+	}
+	console.log('1');
+	console.log(balls.length);
+	console.log(balls[0]);
+}
+
+function update(width,height){
+	for(var i=0; i<balls.length;i++){
+		balls[i].x += balls[i].vx;
+		balls[i].y += balls[i].vy;
+
+		if(balls[i].x-balls[i].radius<=0){
+			balls[i].vx = -balls[i].vx;
+			balls[i].x = balls[i].radius;
+		}
+
+		if(balls[i].x+balls[i].radius>=width){
+			balls[i].vx = -balls[i].vx;
+			balls[i].x = width - balls[i].radius;
+		}
+
+		if(balls[i].y-balls[i].radius<=0){
+			balls[i].vy = -balls[i].vy;
+			balls[i].y = balls[i].radius;
+		}
+
+		if(balls[i].y+balls[i].radius>=height){
+			balls[i].vy = -balls[i].vy;
+			balls[i].y = height - balls[i].radius;
+		}
+	}
+}
+
+</script>
+</html>
+
+
+
+

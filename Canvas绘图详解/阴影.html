@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		canvas { margin: 0 auto; display: block; border: 1px solid black;}
+	</style>
+</head>
+<body>
+	<canvas id="canvas"></canvas>
+</body>
+<script>
+;(function(){
+	var canvas = document.getElementById('canvas');
+	canvas.width = 900;
+	canvas.height = 800;
+	var ctx = canvas.getContext('2d');
+
+	ctx.shadowColor = "rgba(0,0,0,0.8)";
+	ctx.shadowOffsetX = -10;
+	ctx.shadowOffsetY = -10;
+	ctx.shadowBlur = 15;
+
+	ctx.fillStyle = "#058";
+	ctx.fillRect(100, 100, 200, 200);
+
+
+})();
+
+
+
+</script>
+</html>
+
+
+
+

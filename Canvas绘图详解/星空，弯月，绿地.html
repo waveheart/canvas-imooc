@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		canvas { margin: 0 auto; display: block; border: 1px solid black;}
+	</style>
+</head>
+<body>
+	<canvas id="canvas"></canvas>
+</body>
+<script>
+;(function(){
+	var canvas = document.getElementById('canvas');
+	canvas.width = 900;
+	canvas.height = 600;
+	var ctx = canvas.getContext('2d');
+
+	var skyStyle = ctx.createRadialGradient(canvas.width/2, canvas.height, 0, canvas.width/2, canvas.height, canvas.height);
+	skyStyle.addColorStop(1, 'black');
+	skyStyle.addColorStop(0, '#035');
+
+
+
+
+	ctx.fillStyle = skyStyle;
+	ctx.rect(0, 0, canvas.width, canvas.height);
+	ctx.fill();
+	for(var i=0; i<200; i++){
+		var x = Math.random()*canvas.width;
+			y = Math.random()*canvas.height*0.6;
+			r = Math.random()*5 + 5;
+			rotate = Math.random()*360;
+
+		drawStar(ctx, x, y, r, 2*r, rotate);
+	} 
+
+	fillMoon(ctx, 650, 160, 80,2,30)
+	
+	drawLand(ctx);
+
+	ctx.save();
+	ctx.fillStyle = "#058";
+	ctx.font = "30px Arial";
+	ctx.fillText("落霞与孤鹜齐飞，", 50, 450);
+	ctx.fillText("秋水共长天一色！", 50, 500);
+
+	ctx.restore();
+
+	ctx.save();
+	ctx.fillStyle = "#058";
+	ctx.font = "30px Arial";
+	ctx.textAlign = "right";
+	ctx.fillText("--王勃", 850, 550);
+	ctx.restore();
+
+})();
+
+function drawLand(ctx){
+	ctx.save();
+
+	ctx.beginPath();
+	ctx.moveTo(0,400);
+	ctx.bezierCurveTo(400, 270, 470, 600, 900, 420);
+	ctx.lineTo(900,600);
+	ctx.lineTo(0,600);
+	ctx.closePath();
+
+	var landStyle = ctx.createLinearGradient(0, 600, 0, 400);
+	landStyle.addColorStop(0,'#030');
+	landStyle.addColorStop(1,'#580');
+	ctx.fillStyle = landStyle;
+
+	ctx.fill();
+
+	ctx.restore();
+}
+
+
+function drawStar(ctx, x, y, r, rotate){
+	ctx.save();
+
+	ctx.translate(x,y);
+	ctx.rotate(rotate/180*Math.PI);
+	ctx.scale(r, r);
+
+	starPath(ctx);
+
+	ctx.fillStyle = "#fb3";
+	//ctx.strokeStyle = "#fd5";
+	//ctx.lineWidth = 3;
+	//ctx.lineJoin = "round";
+
+	ctx.fill();
+	//ctx.stroke();
+
+
+
+	ctx.restore();
+}
+
+function starPath(ctx){
+	ctx.beginPath()
+
+	for(var i = 0; i < 5; i++){
+		ctx.lineTo(Math.cos((18 + i* 72 )*Math.PI/180), -Math.sin((18 + i*72 )*Math.PI/180));
+		ctx.lineTo(Math.cos((54 + i* 72 )*Math.PI/180)*0.5, -Math.sin((54 + i*72 )*Math.PI/180)*0.5);
+	}
+	ctx.closePath();
+	
+}
+
+function fillMoon(ctx, x, y, r, d,rot,/*optional*/ fillColor ){
+	ctx.save();
+	ctx.translate(x,y);
+	ctx.rotate(rot/180*Math.PI);
+	ctx.scale(r,r);
+	pathMoon(ctx,d);
+	ctx.fillStyle = fillColor || "#fb5";
+	ctx.fill();
+	ctx.restore();
+}
+
+function pathMoon(ctx,d){
+	ctx.beginPath();
+	ctx.arc(0, 0, 1, 0.5*Math.PI, 1.5*Math.PI,true );
+	ctx.moveTo(0,-1);
+	ctx.quadraticCurveTo(1.2, 0, 0, 1);
+	ctx.closePath();
+}
+
+
+
+</script>
+</html>
+
+
+
+

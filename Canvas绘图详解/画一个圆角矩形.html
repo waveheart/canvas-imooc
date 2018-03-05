@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		canvas { margin: 0 auto; display: block;}
+	</style>
+</head>
+<body>
+	<canvas id="canvas"></canvas>
+</body>
+<script>
+;(function(){
+	var canvas = document.getElementById('canvas');
+
+	canvas.width = 800;
+	canvas.height = 800;
+	
+
+	var ctx = canvas.getContext('2d');
+
+
+	fillRoundRact(ctx, 150, 150, 500, 500, 10, "#bbada0");
+	for(var i = 0; i<4;i++){
+		for(var j=0; j<4; j++){
+			fillRoundRact(ctx, 170+i*120, 170+j*120, 100, 100, 6, "#ccc0b3");
+		}
+	}
+	
+
+	
+	
+
+
+})();
+
+function drawRroundRact(ctx, x, y, width, height, r){
+	ctx.save()
+	ctx.translate(x,y);
+
+	pathRoundRact(ctx, width, height, r)
+	ctx.lineWidth = 2;
+	ctx.stroke();
+	ctx.restore();
+	
+	
+}
+
+function fillRoundRact(ctx, x, y, width, height, r, /*optional*/fillColor){
+	if(2 * r > width || 2 * r > height){
+		return;
+	}
+
+	ctx.save()
+	ctx.translate(x,y);
+
+	pathRoundRact(ctx, width, height, r)
+
+	ctx.fillStyle = fillColor || "black";
+	ctx.fill();
+	ctx.restore();
+
+}
+
+
+
+
+function pathRoundRact(ctx, width, height, r){
+	ctx.beginPath();
+	ctx.moveTo(0,r);
+	ctx.arc(r, r, r, Math.PI, Math.PI*1.5);
+	ctx.lineTo(width - r,0);
+	ctx.arc(width-r, r, r, Math.PI*1.5, Math.PI*2)
+	ctx.lineTo(width , height - r);
+	ctx.arc(width-r,height - r, r,  0, Math.PI*0.5)
+	ctx.lineTo( r, height);
+	ctx.arc(r, height - r, r, Math.PI*0.5, Math.PI*1)
+	ctx.closePath();
+}
+
+function strokeRoundRact(ctx, x, y, width, height, r, /*optional*/lineWidth, /*optional*/strokeStyle ){
+	if(2 * r > width || 2 * r > height){
+		return;
+	}
+
+	ctx.save()
+	ctx.translate(x,y);
+
+	pathRoundRact(ctx, width, height, r)
+
+	ctx.lineWidth = lineWidth|| 1;
+	ctx.strokeStyle = strokeStyle || "black";
+	ctx.stroke();
+	ctx.restore();
+
+}
+
+</script>
+</html>

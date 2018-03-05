@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+<canvas id="canvas" style="border:1px solid #aaa; display: block; margin: 50px auto;">当前浏览器不支持Canvas,请更换浏览器后再尝试</canvas>
+</body>
+<script>
+	var ball = { x:512, y:100, r:20, g:2, vx:-4, vy:-10, color:"#005588"}
+	window.onload = function(){
+		var canvas = document.getElementById('canvas');
+		canvas.width = 960;
+		canvas.height = 720;
+
+		var ctx = canvas.getContext('2d');
+		setInterval(function(){
+			render(ctx);
+			update();
+		},50)
+	}
+
+	function update(){
+		ball.x += ball.vx;
+		ball.y += ball.vy;
+		ball.vy += ball.g;
+		console.log(ball.vy)
+		if(ball.y >= 720 - ball.r){
+			ball.y = 720 - ball.r;
+			ball.vy = -ball.vy/2;
+		}
+
+		if(ball.x <= ball.r){
+			ball.x = ball.r;
+			ball.vx = -ball.vy*0.8
+		}
+
+		if(ball.x >= 960-ball.r){
+			ball.x = 960-ball.r;
+			ball.vx = -ball.vy*0.8
+		}
+	}
+
+	function render(ctx){
+		ctx.clearRect(0,0,ctx.canvas.width,ctx.canvas.height);
+
+		ctx.fillStyle = ball.color;
+		ctx.beginPath();
+		ctx.arc(ball.x, ball.y, ball.r, 0, Math.PI*2);
+		ctx.closePath();
+
+		ctx.fill();
+	}
+
+</script>
+</html>

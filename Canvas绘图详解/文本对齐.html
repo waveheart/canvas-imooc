@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		canvas { margin: 0 auto; display: block; border: 1px solid black;}
+	</style>
+</head>
+<body>
+	<canvas id="canvas"></canvas>
+</body>
+<script>
+;(function(){
+	var canvas = document.getElementById('canvas');
+	canvas.width = 900;
+	canvas.height = 800;
+	var ctx = canvas.getContext('2d');
+
+	ctx.font = "bold 40px Arial";
+	ctx.fillStyle = "#058";
+
+	ctx.textAlign = "left"//以文字的起始坐标为参照，即下面函数中的400;
+	ctx.textBaseline = "top";
+	ctx.fillText("textAlign = 'left'", 400, 100);
+	drawBaseLine(ctx,100);
+
+	
+	ctx.textAlign = "center"
+	ctx.textBaseline = "middle";
+	ctx.fillText("textAlign = 'center'", 400,200)
+	drawBaseLine(ctx,200);
+
+
+	ctx.textAlign = "right"
+	ctx.textBaseline = "bottom";
+	ctx.fillText("textAlign = 'right'", 400	,300);
+	drawBaseLine(ctx,300);
+
+	//baseline
+	ctx.strokeStyle = "#888";
+	ctx.moveTo(400,0);
+	ctx.lineTo(400,800);
+	ctx.stroke();
+
+
+
+})();
+
+function drawBaseLine(ctx,h){
+	var width = ctx.canvas.width;
+
+
+	ctx.save();
+	ctx.beginPath();
+
+	ctx.moveTo(0,h);
+	ctx.lineTo(width,h);
+
+	ctx.lineWidth = 2;
+	ctx.strokeStyle = "#888";
+
+	ctx.stroke();
+
+	ctx.restore();
+}
+
+</script>
+</html>
+
+
+
+

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		canvas { margin: 0 auto; display: block; border: 1px solid black;}
+	</style>
+</head>
+<body>
+	<canvas id="canvas"></canvas>
+</body>
+<script>
+
+var searchLight = { x:400, y:400, radius:200, vx:Math.random()*10+5, vy:Math.random()*10+5}
+
+var rot = 0;
+var isIncrease = true;
+
+
+;(function(){
+	var canvas = document.getElementById('canvas');
+	
+
+	canvas.width = 800;
+	canvas.height = 800;
+	var ctx = canvas.getContext('2d');
+
+	ctx.beginPath();
+	ctx.shadowColor = "gray";
+	ctx.shadowOffsetX = 10;
+	ctx.shadowOffsetY = 10;
+	ctx.shadowBlur = 10;
+	ctx.arc(400, 400, 200, 0, Math.PI*2, false);
+	ctx.arc(400, 400, 100, 0, Math.PI*2, true);
+	ctx.fillStyle = "#058";
+	ctx.fill();
+
+
+})();
+
+
+
+</script>
+</html>
+
+
+
+

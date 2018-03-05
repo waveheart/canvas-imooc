@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		canvas { margin: 0 auto; display: block;}
+	</style>
+</head>
+<body>
+	<canvas id="canvas"></canvas>
+</body>
+<script>
+;(function(){
+	var canvas = document.getElementById('canvas');
+	canvas.width = 600;
+	canvas.height = 600;
+	var ctx = canvas.getContext('2d');
+
+	ctx.lineWidth = 10;
+	ctx.strokeStyle = "blue";
+
+	//设置焊接的延伸，默认值是10
+	ctx.lineJoin = "miter";
+	//ctx.lineJoin = "round";
+	//ctx.lineJoin = "bevel";
+	
+	ctx.miterLimit = 20;
+
+	ctx.shadowColor = 'gray'
+	ctx.shadowOffsetX = 10;
+	ctx.shadowOffsetY = 10;
+	ctx.shadowBlur =10;
+
+	drawStar(ctx, 300, 300, 100, 200, 60)
+
+
+})();
+
+function drawStar(ctx, x, y, r, R, rotate){
+	ctx.beginPath()
+	for(var i = 0; i < 5; i++){
+		ctx.lineTo(Math.cos((18 + i* 72 + rotate)*Math.PI/180)*R+x, -Math.sin((18 + i*72 + rotate)*Math.PI/180)*R+y);
+		ctx.lineTo(Math.cos((54 + i* 72 + rotate)*Math.PI/180)*r+x, -Math.sin((54 + i*72 + rotate)*Math.PI/180)*r+y);
+	}
+	ctx.closePath();
+	
+	ctx.stroke();
+}
+</script>
+</html>

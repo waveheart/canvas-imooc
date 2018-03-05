@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		canvas { margin: 0 auto; display: block; border: 1px solid black;}
+	</style>
+</head>
+<body>
+	<canvas id="canvas"></canvas>
+</body>
+<script>
+;(function(){
+	var canvas = document.getElementById('canvas');
+	canvas.width = 900;
+	canvas.height = 800;
+	var ctx = canvas.getContext('2d');
+
+	ctx.globalAlpha = 0.4;
+
+	for(var i=0; i<100;i++){
+		var R = Math.floor(Math.random()*255);
+		var G = Math.floor(Math.random()*255);
+		var B = Math.floor(Math.random()*255);
+
+		ctx.fillStyle = "rgb("+R+","+G+","+B +")";
+		ctx.beginPath();
+		ctx.arc(Math.random()*canvas.width, Math.random()*canvas.height, Math.random()*50, 0, Math.PI*2);
+		ctx.fill();
+	}
+	
+
+	
+	
+
+
+
+})();
+
+
+
+</script>
+</html>
+
+
+
+
